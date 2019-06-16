@@ -37,16 +37,15 @@ export default {
 
   },
   mounted() {
-    this.$http.get('http://localhost:5000/api/search/加州大学伯克利分校')
+    this.$http.get('search/加州大学伯克利分校')
         .then(data => {
           this.frequentlyVisited.push(data.body[0]);
-          console.log(data.body[0]);
         })
         .catch(err => console.error(err));
-    this.$http.get('http://localhost:5000/api/search/斯坦福大学')
+    this.$http.get('search/斯坦福大学')
         .then(data => this.frequentlyVisited.push(data.body[0]))
         .catch(err => console.error(err));
-    this.$http.get('http://localhost:5000/api/search/哈佛大学')
+    this.$http.get('search/哈佛大学')
         .then(data => {
           this.frequentlyVisited.push(data.body[0]);
           this.loaded1 = true;
@@ -55,7 +54,7 @@ export default {
           this.loaded1 = true;
           console.error(err);
         });
-    this.$http.get('http://localhost:5000/api/category/ivy')
+    this.$http.get('category/ivy')
         .then(data => {
           this.ivyleague = data.body;
           this.loaded2 = true;

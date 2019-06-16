@@ -11,13 +11,14 @@ import Routes from './routes'
 import VueResource from 'vue-resource'
 
 
-library.add(faCoffee)
+library.add(faCoffee);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(VueResource);
+Vue.http.options.root = "http://www.wellwells.org/api/" ;
 
 const router = new VueRouter({
   routes: Routes,

@@ -75,7 +75,7 @@ export default {
     }
   },
   mounted() {
-    this.$http.get('http://localhost:5000/api/category/' + this.category)
+    this.$http.get('category/' + this.category)
         .then(data => {
           this.data = data.body;
           this.loaded = true;

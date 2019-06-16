@@ -78,7 +78,7 @@ export default {
     }
   },
   mounted() {
-    this.$http.get('http://localhost:5000/api/search/' + this.search)
+    this.$http.get('search/' + this.search)
         .then(data => {
           this.loaded = true;
           this.data = data.body;

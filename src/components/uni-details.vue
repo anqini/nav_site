@@ -20,7 +20,7 @@
         <h3 class='w-100'><b>排名信息</b></h3>
         <div class="ml-4 pl-3 mt-2">
           <ul>
-            <li v-for="ranking in rankings">
+            <li v-for="ranking in rankings" :key="ranking.title">
               <div class="left_part">
                  {{ ranking.title }}
               </div>
@@ -77,9 +77,9 @@ export default {
   },
   mounted() {
     // console.log("come to category");
-    this.$http.get('http://localhost:5000/api/detail/' + this.id)
+    this.$http.get('detail/' + this.id)
         .then(data => {
-          // console.log(data);
+          console.log(data);
           this.data = data.body;
           this.university = this.data.title;
           // console.log(this.data.description.length);

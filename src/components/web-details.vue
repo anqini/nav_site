@@ -41,7 +41,7 @@ export default {
 
   },
   mounted() {
-    this.$http.get('http://localhost:5000/api/detail/' + this.id)
+    this.$http.get('detail/' + this.id)
         .then(data => {
           this.data = data.body;
           this.website = this.data.title;
