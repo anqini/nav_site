@@ -37,6 +37,7 @@ export default {
 
   },
   mounted() {
+    console.log(new Date());
     this.$http.get('search/加州大学伯克利分校')
         .then(data => {
           this.frequentlyVisited.push(data.body[0]);
