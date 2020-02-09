@@ -51,9 +51,9 @@
       <div class="ranking_info">
         <h3 class='w-100'><b>学院信息</b></h3>
         <div class="ml-4 mt-2 mr-4 pr-1">
-          <div v-for="(college, index) in this.data.collegeIntroContents" v-bind:key="index" style="margin-bottom:20px;">
+          <div v-for="(college, index) in this.data.collegeIntro" v-bind:key="index" style="margin-bottom:20px;">
             
-            <p>{{college}}</p>
+            <p>{{`${college}`}}</p>
           </div>
         </div>
       </div>
@@ -194,6 +194,7 @@ span {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   margin: auto;
+  margin-top: 25px;
 }
 h1 {
   font-size: 20px;
@@ -238,10 +239,10 @@ p h1 {
   white-space: normal;
 }
 .goto {
-  width: 80px;
+  width: 90px;
   height: 36px;
   padding: 6px 12px 6px 12px;
-  margin: 40px 20px 0 30px;
+  margin: 40px 20px 0 20px;
 }
 .desBlock {
   width: calc(100% - 280px);
@@ -280,7 +281,7 @@ p h1 {
   table-layout: fixed;
   word-break: break-all;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: 14px;
 }
 h3 {
   height: 56px;
