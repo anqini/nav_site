@@ -34,6 +34,21 @@
         </div>
       </div>
       <div class="ranking_info">
+        <h3 class='w-100'><b>学杂费信息/师生比/毕业收入</b></h3>
+        <div class="ml-4 pl-3 mt-2">
+          <ul>
+            <li v-for="tuition in tuitions" :key="tuition.title">
+              <div class="left_part">
+                 {{ tuition.title }}
+              </div>
+              <div class="right_part">
+                {{ tuition.content}}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="ranking_info">
         <h3 class='w-100'><b>学院信息</b></h3>
         <div class="ml-4 mt-2 mr-4 pr-1">
           <div v-for="(college, index) in this.data.collegeIntroContents" v-bind:key="index" style="margin-bottom:20px;">
@@ -94,6 +109,16 @@ export default {
                 {name: "研究生专业列表", dest: "", source: ""},
                 {name: "研究生院", dest: "", source: ""},
                 {name: "英语能力要求", dest: "", source: ""}
+              ],
+      tuitions: [{title: "州内学费", content: ""},
+                {title: "州外学费", content: ""},
+                {title: "住宿生活费", content: ""},
+                {title: "本科人数", content: ""},
+                {title: "毕业率", content: ""},
+                {title: "学生保有率", content: ""},
+                {title: "学生教授比", content: ""},
+                {title: "男女比例", content: ""},
+                {title: "毕业生工资", content: ""},
               ]
     }
   },
@@ -126,7 +151,10 @@ export default {
           this.rankings[0].content = this.data.en_title;
           this.rankings[1].content = this.data.address.split("：")[1];
           this.rankings[2].content = this.data.state;
-          this.rankings[3].content = this.data.ranking;
+          this.rankings[3].content = this.data.rank;
+          for (var i = 0; i < 9; i++) {
+            this.tuitions[i].content = this.data.importantdata[i];
+          }
           this.entries[0].dest = this.data.school["国际学生本科申请"];
           this.entries[1].dest = this.data.school["国际学生本科申请截止日期"];
           this.entries[2].dest = this.data.school["学院列表"];
@@ -143,9 +171,9 @@ export default {
           this.entries[5].source = this.logo_source;
           this.entries[6].source = this.logo_source;
           this.entries[7].source = this.logo_source;
+
         })
         .catch(err => console.error(err));
-
   }
 }
 </script>

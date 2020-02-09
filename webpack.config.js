@@ -55,7 +55,7 @@ module.exports = {
     overlay: true,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000'
+        target: 'http://www.wellwells.org:5000'
       }
     }
   },

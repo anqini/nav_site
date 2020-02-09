@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBar id="sidebar" class="h-100" :showBar="show"></NavBar>
+    <NavBar id="sidebar" class="h-100" :showBar="show" :routeParam="$route.params"></NavBar>
     <div :class="combClass2">
         <Header @sidebar="sidebar($event)"></Header>
         <transition name="fade">
@@ -27,6 +27,9 @@ export default {
     return {
       show: true
     }
+  },
+  mounted() {
+
   },
   methods: {
     sidebar() {

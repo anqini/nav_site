@@ -1,9 +1,20 @@
 <template>
-  <div id="nav">
+  <div id="nav h-100">
     <section style="width: 200px" :class="combClass">
-      <ul class="sidebar-menu  h-100">
-        <li class="sidebar-header"><router-link id="title" to="/">井井留学导航</router-link></li>
-        <li :class="{active: index1}">
+      <div class="header"><router-link id="title" to="/">井井留学导航</router-link></div>
+      <ul class="sidebar-menu">
+        
+        
+        <li style="display: flex; flex: wrap; color: white; margin: 10px 20px;" v-for="school in cleanData" :key="school.title">
+          <input type="checkbox" :name="school.title" style="margin-right: 10px; margin-top: 2px;" :checked="school._id == routeParam.id ">
+          <label :for="school.title">
+            <router-link class="anchor" :to="'/detail/uni/' + school._id" >
+              <p><strong>{{ school.rank }}</strong> {{ school.title }}</p>
+            </router-link>
+          </label>
+          
+        </li>
+        <!-- <li :class="{active: index1}">
           <a href="#" @click="toggle1">
             <span>精准查校</span>
           </a>
@@ -43,7 +54,7 @@
           <ul class="sidebar-submenu" v-show="index5">
             <li v-for="subject in rents"><router-link :to="'/catagory/'+subject"> {{ subject }} </router-link></li>
           </ul>
-        </li>
+        </li> -->
       </ul>
     </section>
   </div>
@@ -53,7 +64,8 @@
   export default {
     name: 'Index',
     props: [
-      'showBar'
+      'showBar',
+      'routeParam'
     ],
     data() {
       return {
@@ -68,7 +80,9 @@
         index2: false,
         index3: false,
         index4: false,
-        index5: false
+        index5: false,
+        data: [],
+        cleanData: []
       }
     },
     methods: {
@@ -121,6 +135,36 @@
     mounted() {
 
     },
+    created() {
+      this.$http.get('schools')
+        .then(data => {
+          this.raw = data.body;
+          let s = new Set()
+          // console.log(this.raw)
+          if (this.raw) {
+            for (let record of this.raw) {
+              if (record && record.rank && record.rank.length > 0 && record.rank.split('：').length == 2) {
+                record.rank = record.rank.split('：')[1]
+                if (!s.has(record.title)) {
+                  console.log(record._id)
+                  this.cleanData.push(record)
+                  s.add(record.title)
+                }
+                
+                
+              } 
+            }
+          }
+          this.cleanData.sort((a,b) => {
+            let rankforA = parseInt(a.rank)
+            let rankforB = parseInt(b.rank)
+            if (rankforA > rankforB) return 1
+            if (rankforA < rankforB) return -1
+            return 0
+          })
+        })
+        .catch(err => console.error(err));
+    },
     computed:{
       combClass() {
         return { "h-100": true,
@@ -128,7 +172,7 @@
                   "animate-menu-left": true,
                   "animate-menu-open": this.showBar
                 }
-        }
+      }
     }
   }
 </script>
@@ -143,6 +187,16 @@
   word-break: break-all;
   box-sizing: border-box;
   font-size: 12px;
+}
+.header {
+  height: 70px;
+    background-color: #1a2227;
+    text-align: center;
+    padding-top: 20px;
+}
+a {
+  color: white;
+  text-decoration: none;
 }
 #title {
   border: none;
@@ -176,8 +230,13 @@ left: 0; }
 list-style: none;
 margin: 0;
 padding: 0;
-background-color: #222d32; }
-.sidebar-menu > li {
+background-color: #222d32; 
+margin-top: -10px;
+padding-top: 10px;
+overflow: scroll;
+height: 100%;
+    }
+/* .sidebar-menu > li {
 position: relative;
 margin: 0;
 padding: 0; }
@@ -195,14 +254,14 @@ padding: 0; }
 .sidebar-menu > li .label,
 .sidebar-menu > li .badge {
   margin-top: 3px;
-  margin-right: 5px; }
+  margin-right: 5px; } */
 .sidebar-menu li.sidebar-header {
 padding: 15px 15px 15px 15px;
 font-size: 20px;
 text-align: center;
 color: #4b646f;
 background: #1a2226; }
-.sidebar-description {
+/* .sidebar-description {
   padding: 10px 25px 10px 15px;
   font-size:12px;
   color: white;
@@ -223,7 +282,6 @@ height: 100%;
 color: #b8c7ce;
 text-decoration: none; }
 .sidebar-menu .sidebar-submenu {
-/* display: none; */
 list-style: none;
 padding-left: 5px;
 margin: 0 1px;
@@ -290,7 +348,6 @@ display: block; }
 color: #b8c7ce;
 text-decoration: none; }
 .sidebar-menu-rtl .sidebar-submenu {
-/* display: none; */
 list-style: none;
 padding-right: 5px;
 margin: 0 1px;
@@ -308,5 +365,5 @@ background: #2c3b41; }
   .sidebar-menu-rtl .sidebar-submenu > li > a > .fa-angle-down {
     width: auto; }
 .sidebar-menu-rtl .sidebar-submenu > li.active > a, .sidebar-menu-rtl .sidebar-submenu > li > a:hover {
-  color: #fff; }
+  color: #fff; } */
 </style>
