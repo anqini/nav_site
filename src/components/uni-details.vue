@@ -22,7 +22,7 @@
         <h3 class='w-100'><b>排名信息</b></h3>
         <div class="ml-4 pl-3 mt-2">
           <ul>
-            <li v-for="ranking in rankings" :key="ranking.title">
+            <li v-for="ranking in rankings" :key="ranking.title" style="margin-bottom: 5px;">
               <div class="left_part">
                  {{ ranking.title }}
               </div>
@@ -37,7 +37,7 @@
         <h3 class='w-100'><b>学杂费信息/师生比/毕业收入</b></h3>
         <div class="ml-4 pl-3 mt-2">
           <ul>
-            <li v-for="tuition in tuitions" :key="tuition.title">
+            <li v-for="tuition in tuitions" :key="tuition.title" style="margin-bottom: 5px;">
               <div class="left_part">
                  {{ tuition.title }}
               </div>
@@ -99,7 +99,7 @@ export default {
       uni_web: "",
       rankings: [{title: "英文名", content: ""},
                  {title: "地址", content: ""},
-                 {title: "国家", content: ""},
+                 {title: "所在州", content: ""},
                  {title: "排名", content: null} ],
       entries: [{name: "国际学生本科申请", dest:"", source: ""},
                 {name: "国际学生本科申请截止日期", dest:"", source: ""},
@@ -147,7 +147,8 @@ export default {
           } catch(err) {
               this.logo_source = require('../assets/0.png');
           }
-          this.uni_web = this.data.web;
+          // console.log(this.data.web)
+          this.uni_web = 'https://' + this.data.web;
           this.rankings[0].content = this.data.en_title;
           this.rankings[1].content = this.data.address.split("：")[1];
           this.rankings[2].content = this.data.state;

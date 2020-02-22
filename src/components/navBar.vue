@@ -1,19 +1,45 @@
 <template>
   <div id="nav h-100">
     <section style="width: 200px" :class="combClass">
-      <div class="header"><router-link id="title" to="/">井井留学导航</router-link></div>
+      <div class="header"><router-link id="title" to="/">院校库</router-link></div>
       <ul class="sidebar-menu">
         
-        
-        <li style="display: flex; flex: wrap; color: white; margin: 10px 20px;" v-for="school in cleanData" :key="school.title">
-          <input type="checkbox" :name="school.title" style="margin-right: 10px; margin-top: 2px;" :checked="school._id == routeParam.id ">
-          <label :for="school.title">
-            <router-link class="anchor" :to="'/detail/uni/' + school._id" >
-              <p><strong>{{ school.rank }}</strong> {{ school.title }}</p>
-            </router-link>
-          </label>
-          
+        <li :class="{active: index1}">
+          <a href="#" @click="toggle1">
+            <span style="font-size: 1.2em;">综合大学</span>
+          </a>
         </li>
+        <div :class="{extendlist: true, extendlistcollapse: index1}">
+          <li style="display: flex; flex: wrap; color: white; margin: 10px 20px;" v-for="school in cleanData" :key="school.title">
+            <input type="checkbox" :name="school.title" style="margin-right: 10px; margin-top: 2px;" :checked="school._id == routeParam.id ">
+            <label :for="school.title">
+              <router-link class="anchor" :to="'/detail/uni/' + school._id" >
+                <p><strong>{{ school.rankIn2020 }}</strong> {{ school.title }}</p>
+              </router-link>
+            </label>
+          </li>
+        </div>
+        <div style="height: 20px; cursor: pointer;" @click="toggle1" v-show="!index1"><i class="arrow down"></i></div>
+        
+        <li :class="{active: index2}">
+          <a href="#" @click="toggle2">
+            <span style="font-size: 1.2em;">文理学院</span>
+          </a>
+        </li>
+        <div :class="{extendlist: true, extendlistcollapse: index2}">
+          <li style="display: flex; flex: wrap; color: white; margin: 10px 20px;" v-for="school in cleanData2" :key="school.title">
+            <input type="checkbox" :name="school.title" style="margin-right: 10px; margin-top: 2px;" :checked="school._id == routeParam.id ">
+            <label :for="school.title">
+              <router-link class="anchor" :to="'/detail/uni/' + school._id" >
+                <p><strong>{{ school.rankIn2020 }}</strong> {{ school.title }}</p>
+              </router-link>
+            </label>
+          </li>
+        </div>
+        <div style="height: 20px; cursor: pointer;" @click="toggle2"  v-show="!index2"><i class="arrow down"></i></div>
+        
+        
+
         <!-- <li :class="{active: index1}">
           <a href="#" @click="toggle1">
             <span>精准查校</span>
@@ -76,13 +102,14 @@
                           "搜学校", "留学论坛", "科技与工具"],
         livings: ["医疗与保险", "奖学金", "招聘与职场", "政府官方"],
         rents: ["住宿"],
-        index1: true,
+        index1: false,
         index2: false,
         index3: false,
         index4: false,
         index5: false,
         data: [],
-        cleanData: []
+        cleanData: [],
+        cleanData2: []
       }
     },
     methods: {
@@ -140,24 +167,45 @@
         .then(data => {
           this.raw = data.body;
           let s = new Set()
-          // console.log(this.raw)
           if (this.raw) {
             for (let record of this.raw) {
-              if (record && record.rank && record.rank.length > 0 && record.rank.split('：').length == 2) {
-                record.rank = record.rank.split('：')[1]
+              if (record.rankIn2020) {
                 if (!s.has(record.title)) {
                   console.log(record._id)
                   this.cleanData.push(record)
                   s.add(record.title)
                 }
-                
-                
               } 
             }
           }
           this.cleanData.sort((a,b) => {
-            let rankforA = parseInt(a.rank)
-            let rankforB = parseInt(b.rank)
+            let rankforA = parseInt(a.rankIn2020)
+            let rankforB = parseInt(b.rankIn2020)
+            if (rankforA > rankforB) return 1
+            if (rankforA < rankforB) return -1
+            return 0
+          })
+        })
+        .catch(err => console.error(err));
+
+      this.$http.get('schools_liberal_art')
+        .then(data => {
+          this.raw = data.body;
+          let s = new Set()
+          if (this.raw) {
+            for (let record of this.raw) {
+              if (record.rankIn2020) {
+                if (!s.has(record.title)) {
+                  console.log(record._id)
+                  this.cleanData2.push(record)
+                  s.add(record.title)
+                }
+              } 
+            }
+          }
+          this.cleanData2.sort((a,b) => {
+            let rankforA = parseInt(a.rankIn2020)
+            let rankforB = parseInt(b.rankIn2020)
             if (rankforA > rankforB) return 1
             if (rankforA < rankforB) return -1
             return 0
@@ -236,7 +284,9 @@ padding-top: 10px;
 overflow: scroll;
 height: 100%;
     }
-/* .sidebar-menu > li {
+
+
+.sidebar-menu > li {
 position: relative;
 margin: 0;
 padding: 0; }
@@ -254,7 +304,11 @@ padding: 0; }
 .sidebar-menu > li .label,
 .sidebar-menu > li .badge {
   margin-top: 3px;
-  margin-right: 5px; } */
+  margin-right: 5px; } 
+
+
+
+
 .sidebar-menu li.sidebar-header {
 padding: 15px 15px 15px 15px;
 font-size: 20px;
@@ -366,4 +420,26 @@ background: #2c3b41; }
     width: auto; }
 .sidebar-menu-rtl .sidebar-submenu > li.active > a, .sidebar-menu-rtl .sidebar-submenu > li > a:hover {
   color: #fff; } */
+
+.extendlist {
+  max-height: 200px;
+  height: auto;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+.extendlistcollapse {
+  max-height: fit-content;
+}
+
+i {
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+  margin-left: 45%;
+}
+.down {
+  transform: rotate(45deg) ;
+  -webkit-transform: rotate(45deg);
+}
 </style>
