@@ -16,8 +16,7 @@ Vue.use(VueResource);
 Vue.http.options.root = "http://localhost:5000/api/" ;
 
 const router = new VueRouter({
-  routes: Routes,
-  mode: 'history'
+  routes: Routes
 });
 
 Vue.filter('snippet', value => {
