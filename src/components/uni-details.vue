@@ -48,7 +48,7 @@
           </ul>
         </div>
       </div>
-      <div class="ranking_info">
+      <div class="ranking_info" v-show="data.liberalArt != '1'">
         <h3 class='w-100'><b>学院信息</b></h3>
         <div class="ml-4 mt-2 mr-4 pr-1">
           <div v-for="(college, index) in this.data.collegeIntro" v-bind:key="index" style="margin-bottom:20px;">
@@ -57,7 +57,7 @@
           </div>
         </div>
       </div>
-      <div class="ranking_info">
+      <div class="ranking_info" v-show="data.liberalArt != '1'">
         <h3 class='w-100'><b>生活相关</b></h3>
         <div class="ml-4 mt-2 mr-4 pr-1">
           <h3><strong>交通</strong></h3>
@@ -70,8 +70,8 @@
           <p>{{this.data.food}}</p>
         </div>
       </div>
-      <h3 class='w-100'><b>其他入口</b></h3>
-      <div class="other_entry d-flex flex-wrap">
+      <h3 class='w-100' v-show="data.liberalArt != '1'"><b>其他入口</b></h3>
+      <div class="other_entry d-flex flex-wrap" v-if="data.liberalArt != '1'">
         <SubEle v-for="entry in entries" :name="entry.name"
              :source='entry.source'
              :dest='entry.dest'

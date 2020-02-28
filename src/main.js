@@ -12,8 +12,8 @@ Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(VueResource);
-// Vue.http.options.root = "http://152.136.150.88:5000/api/" ;
-Vue.http.options.root = "http://localhost:5000/api/" ;
+Vue.http.options.root = "http://152.136.150.88:5000/api/" ;
+// Vue.http.options.root = "http://localhost:5000/api/" ;
 
 const router = new VueRouter({
   routes: Routes
