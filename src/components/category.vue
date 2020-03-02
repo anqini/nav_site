@@ -3,7 +3,7 @@
     <h1>{{ category }}</h1>
     <p>更多{{ category }}名校咨询</p>
     <div class="mx-auto rounded d-flex flex-wrap pb-3 mt-4 searchResult">
-      <h3 class='w-100'><b>{{ category }}排名</b> <i v-show="category==='综合大学'">排名{{ page * 12 + 1 }}-{{ Math.min(page * 12 + 12, this.data.length) }}</i></h3>
+      <h3 class='w-100'><b>{{ category }}排名</b> <i v-show="category==='综合大学'">排名{{ page * 24 + 1 }}-{{ Math.min(page * 24 + 24, this.data.length) }}</i></h3>
       <Ele v-for="website in shownData" :data='website' :key="website.title"></Ele>
       <div class='paging' v-show="pageRange>1">
         <button class="btn btn-secondary-outline" :disabled="page==pageRange-1" @click="next">下一页</button>
@@ -56,15 +56,15 @@ export default {
   computed: {
     shownData() {
       if (this.page == this.pageRange - 1) {
-          return this.data.slice(this.page * 12);
+          return this.data.slice(this.page * 24);
       } else if (this.page < this.pageRange) {
-          return this.data.slice(this.page * 12, (this.page + 1) * 12);
+          return this.data.slice(this.page * 24, (this.page + 1) * 24);
       } else {
           return [];
       }
     },
     pageRange() {
-      return  Math.ceil(this.data.length / 12);
+      return  Math.ceil(this.data.length / 24);
     },
     pageList() {
       var list = [];

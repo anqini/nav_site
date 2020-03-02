@@ -11,7 +11,9 @@
 
         <div class="p-3 desBlock">
           <h1>学校名称：<b>{{ university }}</b></h1> <br />
-          <h2>学校简介：{{ uni_description }}</h2>
+          <h2>学校简介：</h2>
+          <h2 style="margin-top:20px;">{{ uni_description }}</h2>
+          <h2 style="margin-top:20px;">{{uni_description2}}</h2>
         </div>
         <a :href="uni_web"><button class="btn btn-secondary goto" type="submit">立即前往</button></a>
 
@@ -29,6 +31,28 @@
               </div>
             </li>
           </ul>
+        </div>
+      </div>
+      <div class="ranking_info">
+        <h3 class='w-100'><b>学院信息</b></h3>
+        <div class="ml-4 mt-2 mr-4 pr-1">
+          <div v-for="(college, index) in this.data.collegeIntro" v-bind:key="index" style="margin-bottom:20px;">
+            
+            <p>{{`${college}`}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="ranking_info">
+        <h3 class='w-100'><b>生活相关</b></h3>
+        <div class="ml-4 mt-2 mr-4 pr-1">
+          <h3><strong>交通</strong></h3>
+          <p>{{this.data.transport}}</p>
+          <br>
+          <h3><strong>安全</strong></h3>
+          <p>{{this.data.security}}</p>
+          <br>
+          <h3><strong>交通</strong></h3>
+          <p>{{this.data.food}}</p>
         </div>
       </div>
       <h3 class='w-100'><b>其他入口</b></h3>
@@ -55,6 +79,7 @@ export default {
       data: {},
       university: "",
       uni_description: "",
+      uni_description2: "",
       logo_source: null,
       uni_web: "",
       rankings: [{title: "英文名", content: ""},
@@ -83,7 +108,11 @@ export default {
           this.data = data.body;
           this.university = this.data.title;
           // console.log(this.data.description.length);
-          if (this.data.description && this.data.description.length > 0) {
+          // console.log(this.data.collegeIntro)
+          if (this.data.schoolIntro && this.data.schoolIntro.length >= 2) {
+            this.uni_description = this.data.schoolIntro[0];
+            this.uni_description2 = this.data.schoolIntro[1];
+          } else if (this.data.description && this.data.description.length > 0) {
             this.uni_description = this.data.description;
           } else {
             this.uni_description = "暂无简介";
@@ -95,9 +124,9 @@ export default {
           }
           this.uni_web = this.data.web;
           this.rankings[0].content = this.data.en_title;
-          this.rankings[1].content = this.data.city;
+          this.rankings[1].content = this.data.address.split("：")[1];
           this.rankings[2].content = this.data.state;
-          this.rankings[3].content = this.data.ranking;
+          this.rankings[3].content = this.data.rank;
           this.entries[0].dest = this.data.school["国际学生本科申请"];
           this.entries[1].dest = this.data.school["国际学生本科申请截止日期"];
           this.entries[2].dest = this.data.school["学院列表"];
@@ -137,6 +166,7 @@ span {
   position: absolute;
   top: 0; right: 0; bottom: 0; left: 0;
   margin: auto;
+  margin-top: 25px;
 }
 h1 {
   font-size: 20px;
@@ -181,10 +211,10 @@ p h1 {
   white-space: normal;
 }
 .goto {
-  width: 80px;
+  width: 90px;
   height: 36px;
   padding: 6px 12px 6px 12px;
-  margin: 40px 20px 0 30px;
+  margin: 40px 20px 0 20px;
 }
 .desBlock {
   width: calc(100% - 280px);
@@ -223,7 +253,7 @@ p h1 {
   table-layout: fixed;
   word-break: break-all;
   box-sizing: border-box;
-  font-size: 12px;
+  font-size: 14px;
 }
 h3 {
   height: 56px;

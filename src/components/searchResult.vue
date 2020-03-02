@@ -55,16 +55,16 @@ export default {
   computed: {
     shownData() {
       if (this.page == this.pageRange - 1) {
-          return this.data.slice(this.page * 12);
+          return this.data.slice(this.page * 24);
       } else if (this.page < this.pageRange) {
-          return this.data.slice(this.page * 12, (this.page + 1) * 12);
+          return this.data.slice(this.page * 24, (this.page + 1) * 24);
       } else {
           return [];
       }
     },
     pageRange() {
       if (this.data) {
-        return  Math.ceil(this.data.length / 12);
+        return  Math.ceil(this.data.length / 24);
       } else {
         return 0;
       }
