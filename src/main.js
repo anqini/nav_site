@@ -12,7 +12,7 @@ Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 Vue.use(VueResource);
-Vue.http.options.root = "http://www.wellwells.org/api/" ;
+Vue.http.options.root = "https://152.136.150.88:5000/api/" ;
 
 const router = new VueRouter({
   routes: Routes,
