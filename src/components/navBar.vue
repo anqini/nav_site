@@ -171,7 +171,7 @@
             for (let record of this.raw) {
               if (record.rankIn2020) {
                 if (!s.has(record.title)) {
-                  console.log(record._id)
+                  // console.log(record._id)
                   this.cleanData.push(record)
                   s.add(record.title)
                 }
@@ -196,7 +196,7 @@
             for (let record of this.raw) {
               if (record.rankIn2020) {
                 if (!s.has(record.title)) {
-                  console.log(record._id)
+                  // console.log(record._id)
                   this.cleanData2.push(record)
                   s.add(record.title)
                 }

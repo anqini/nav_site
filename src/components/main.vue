@@ -89,10 +89,8 @@ export default {
     //       this.loaded2 = true;
     //       console.error(err);
     //     });
-    console.time("timer")
     this.$http.get('table')
         .then(data => {
-          console.timeLog("timer")
           this.raw = data.body;
           let s = new Set()
           if (this.raw) {
@@ -103,7 +101,6 @@ export default {
               }
             }
           }
-          console.timeLog("timer")
           this.data.sort((a,b) => {
             let rankforA = parseInt(a.rankIn2020)
             let rankforB = parseInt(b.rankIn2020)
@@ -111,7 +108,6 @@ export default {
             if (rankforA < rankforB) return -1
             return 0
           })
-          console.timeLog("timer")
           this.isloaded = true;
         })
         .catch(err => {
