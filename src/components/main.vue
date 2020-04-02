@@ -4,12 +4,12 @@
     <p>为您提供最适合您的美国留学生活网站</p>
     <div class="mx-auto rounded d-flex flex-wrap mt-4 searchResult">
       <h3 class='w-100'><b>大学排名</b></h3>
-      <div style="width: 100%; height: 300px;" v-if="!this.isloaded">
+      <div style="width: 100%; height: 300px;" v-show="!this.isloaded">
         <div style="width: 120px;background-color:#409cff; opacity: 0.5; padding: 20px; margin: 50px auto; border-radius: 5px;">
           <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </div>
       </div>
-      <table class="tg" v-else>
+      <table class="tg" v-show="this.isloaded">
         <tr>
           <th class="tg-cly1">2020排名</th>
           <th class="tg-cly1">学校名称</th>
@@ -90,7 +90,6 @@ export default {
     //       console.error(err);
     //     });
     console.time("timer")
-    console.timeLog("timer")
     this.$http.get('table')
         .then(data => {
           console.timeLog("timer")
